@@ -1,0 +1,70 @@
+{%extends 'base.html'%}
+{%block title%}author page{%endblock%}
+{%block content%}
+<h1>{{author.full_name}}</h1>
+
+<div class="row me-2">
+    <div class="col-2 mt-2">
+        <img class="cover-pic" src="{{author.author_image.url}}">
+    </div>
+    <div class="col-9 mt-3 ms-5">
+        <p>{{author.bio}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-3">
+        <div class="mt-3">
+            <p><b>Born</b>: {{author.born}}</p>
+            {%if author.residency%}
+                <p><b>Residency</b>: {{author.residency}}</p>
+            {%endif%}
+            {%if author.email%}
+                <p><b>Email</b>: {{author.email}}</p>
+            {%endif%}
+        </div>
+    </div>
+</div>
+
+
+{%if page_obj%}
+    <hr class="border border-danger border-2 opacity-50">
+    <h5>All books written by {{author.last_name}}</h5>
+    <div class="row">
+        {%for book_author in page_obj%}
+            <div class=" mt-5 col-3">
+                <p><a href="{%url 'books:detail' book_author.book.id%}">{{book_author.book.title}}</a></p>
+                <img class="cover-pic" src="{{book_author.book.book_cover.url}}">
+            </div>
+        {%endfor%}
+    </div>
+    <nav>
+        <ul class="pagination mt-3">
+            {% if page_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{page_obj.previous_page_number}}">previous</a></li>
+            {% endif %}
+
+            <li class="page-item active">
+                <a href="#" class="page-link">{{page_obj.number}}</a>
+            </li>
+
+            {% if page_obj.has_next%}
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{%endif%}
+
+
+
+
+<div class="mb-4 mt-4 card">
+  <div class="card-body">
+    <blockquote class="blockquote mb-0">
+      <footer class="blockquote-footer"> {{author.motto}} <cite title="Source Title">"{{author.full_name}}"</cite></footer>
+    </blockquote>
+  </div>
+</div>
+
+{%endblock%}

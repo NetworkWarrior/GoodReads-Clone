@@ -1,0 +1,14 @@
+{%extends 'base.html'%}
+{%block title%}Friend List{%endblock%}
+{%block content%}
+    {%for profile in profiles%}
+        <div class="size-ui ui segment">
+            <img class="d-block ui-w-40 rounded-circle" src="{{profile.profile_picture.url}}">
+            {{profile}}
+            <br>
+            <a href="{%url 'account:profile' profile.id%}">
+                <button class="ui primary button">See profile</button>
+            </a>
+        </div>
+    {%endfor%}
+{%endblock content%}

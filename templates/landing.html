@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{%block content%}
+
+    <div id="box">
+        <h1>Welcome to GoodReads-Clone</h1>
+    </div>
+
+    <hr class="border border-danger border-2 opacity-50">
+    <div class="row">
+        <div class="col-4">
+            <ul class="list-group">
+                <li class="list-group-item active"><h3>About me</h3></li>
+                <li class="list-group-item"><b>Full Name</b>: Ismoiljon Abdumajidov</li>
+                <li class="list-group-item"><b>Birth </b>: 17.06.2003 (Uzbekistan, Andijan region)</li>
+                <li class="list-group-item"><b>Username</b>: Network_Warrior</li>
+                <li class="list-group-item"><b>Residency</b>: Uzbekistan</li>
+                <li class="list-group-item"><b>Occupation</b>: Student (Poland, University of Lodz.<br>Computer-Science faculty)</li>
+                <li class="list-group-item"><b>Staff Status</b>: Owner</li>
+            </ul>
+        </div>
+        <div class="col-7 ms-5">
+            <ul class="list-group float-end">
+                <li class="list-group-item active"><h3>Tools used for project </h3></li>
+                <li class="list-group-item">HTL, CSS, JAVASCRIPT</li>
+                <li class="list-group-item">PYTHON and DJANGO</li>
+                <li class="list-group-item">PostgreSQL</li>
+                <li class="list-group-item">DRF</li>
+                <li class="list-group-item">UNIT TEST</li>
+                <li class="list-group-item">CELERY</li>
+                <li class="list-group-item">RabbitMQ</li>
+                <li class="list-group-item">COMMANDLINE</li>
+            </ul>
+        </div>
+    </div>
+
+    {%if user_obj%}
+    <hr class="border border-danger border-2 opacity-50">
+    <h3>Community Members</h3>
+    <div class="row">
+        {%for user in user_obj%}
+            <div class=" mt-5 col-3">
+                <p>{{user.username}}</p>
+                <img class="profile-pic" src="{{user.profile_picture.url}}">
+            </div>
+        {%endfor%}
+    </div>
+    <nav>
+        <ul class="pagination mt-3">
+            {% if user_obj.has_previous %}
+                <li class="page-item"><a class="page-link" href="?page=1">&laquo; first</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{user_obj.previous_page_number}}">previous</a></li>
+            {% endif %}
+
+            <li class="page-item active">
+                <a href="#" class="page-link">{{user_obj.number}}</a>
+            </li>
+
+            {% if user_obj.has_next%}
+                <li class="page-item"><a class="page-link" href="?page={{ user_obj.next_page_number }}">next</a></li>
+                <li class="page-item"><a class="page-link" href="?page={{ user_obj.paginator.num_pages }}">last&raquo;</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+{%endif%}
+
+
+{%endblock content%}
