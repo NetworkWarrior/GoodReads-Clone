@@ -20,6 +20,7 @@ from django.urls import path, include
 from .views import landing_page, home_page
 from django.conf import settings
 from django.conf.urls.static import static
+
 urlpatterns = [
     path('', landing_page, name='landing'),
     path('home/', home_page, name='home_page'),
@@ -33,6 +34,6 @@ urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-
+handler404 = 'config.views.handle_not_found'
 
 

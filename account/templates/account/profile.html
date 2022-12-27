@@ -1,6 +1,12 @@
 {%extends 'base.html'%}
 {%block title%}Profile page{%endblock%}
 {%block content%}
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 2fr 6fr 1fr;
+    }
+</style>
      <div class="image d-flex flex-column justify-content-center align-items-center">
          <button class="btn btn-secondary">
              <img class="profile-pic" alt="Not found" src="{{user.profile_picture.url}}">
@@ -10,12 +16,36 @@
          <span class="idd">{{user.email}}</span>
          {%if request.user == user %}
             <div class=" d-flex mt-2"> <a class="btn btn-dark" href="{%url 'account:profile-edit'%}">Edit-Profile</a> </div>
-         {%else%}
-            <form method="post" action="{%url 'account:profile' user.id%}">
-                {%csrf_token%}
-                <button type="submit" class="btn btn-dark">follow</button>
-            </form>
          {%endif%}
          <div class=" px-2 rounded mt-4 date "> <span class="join">Joined {{user.date_joined |date:"M d, Y"}}</span></div>
      </div>
+    <div class="mt-3">
+
+        {%for review in reviews%}
+            <div class="size-ui ui segment home-container">
+                <div>
+                    <img class="d-block ui-w-40 rounded-circle mb-1" src="{{review.user.profile_picture.url}}">
+                    <b>@{{review.user.username}}</b>
+                    <br>
+                    Posted for "<i>{{review.book}}</i>"<br>
+                    {{review.created_at|timesince}} ago
+                </div>
+                <div >
+                    <p>{{review.comment|truncatechars:450}}</p>
+                </div>
+                <div class="ms-5">
+                    {%if request.user == review.user%}
+                        <a href="{%url 'books:delete_review' review.book.id review.id%}" class=" ms-5 bi bi-trash">
+                        </a>
+                        <a href="{%url 'books:edit_review' review.book.id review.id%}" class=" ms-2 bi bi-pen">
+                        </a>
+                    {%endif%}
+                </div>
+            </div>
+        {%endfor%}
+
+    </div>
 {%endblock content%}
+
+
+

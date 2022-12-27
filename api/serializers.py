@@ -9,12 +9,10 @@ class BookSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'description', 'isbn')
 
 
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ('id', 'first_name', 'last_name', 'email', 'username')
-
 
 
 class BookReviewSerializer(serializers.ModelSerializer):

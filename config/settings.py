@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-%*v1xbgbc*%1)ttt94!7737l2snwyf8)05o8e)z**=vhuq5xq(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 LOGIN_URL = 'account:login'
 
@@ -58,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -126,6 +127,8 @@ USE_TZ = True
 AUTH_USER_MODEL = "account.CustomUser"
 
 MEDIA_URL = '/media/'
+
+STATIC_ROOT = 'static/css'
 
 MEDIA_ROOT = BASE_DIR/'media-files'
 # Static files (CSS, JavaScript, Images)

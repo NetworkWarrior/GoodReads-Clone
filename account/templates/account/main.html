@@ -1,14 +1,32 @@
 {%extends 'base.html'%}
 {%block title%}Friend List{%endblock%}
 {%block content%}
+<style>
+    .home-container{
+        display: grid;
+        grid-template-columns: 7fr 1fr;
+    }
+</style>
+<div class="row mb-3">
+    <div class="col-4">
+        <form method="get" class="d-flex">
+            <input class="form-control" type="text" placeholder="Search Users" name="q" value="{{search}}">
+            <button class=" ms-2 btn btn-success">Search</button>
+        </form>
+    </div>
+</div>
     {%for profile in profiles%}
-        <div class="size-ui ui segment">
-            <img class="d-block ui-w-40 rounded-circle" src="{{profile.profile_picture.url}}">
-            {{profile}}
-            <br>
-            <a href="{%url 'account:profile' profile.id%}">
-                <button class="ui primary button">See profile</button>
-            </a>
+        <div class="home-container size-ui ui segment">
+            <div>
+               <img class="d-block ui-w-40 rounded-circle" src="{{profile.profile_picture.url}}">
+                <b class="mt-2">@{{profile}}</b>
+                <br>
+            </div>
+            <div>
+                <a href="{%url 'account:profile' profile.id%}">
+                    <button class="ui primary button">See profile</button>
+                </a>
+            </div>
         </div>
     {%endfor%}
 {%endblock content%}

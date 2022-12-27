@@ -18,6 +18,7 @@ from django.views.generic import ListView, DetailView
 #  context_object_name = 'books'
 #  paginate_by = 2
 
+
 class BooksView(View):
     def get(self, request):
         books = Book.objects.all().order_by('id')

@@ -8,5 +8,5 @@
 <p>
     <b>Review</b>: {{review.comment}}
 </p>
-<a href="{%url 'books:delete_complete' book.id review.id%}" class="btn btn-outline-danger">Yes</a> <a class="btn btn-outline-primary" href="{%url 'books:detail' book.id%}">No</a>
+<a href="{%url 'books:delete_complete' book.id review.id%}" class="btn btn-outline-danger">Yes</a> <a class="btn btn-outline-primary" href="{{request.META.HTTP_REFERER}}">No</a>
 {%endblock content%}

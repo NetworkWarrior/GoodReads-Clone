@@ -4,6 +4,10 @@ from books.models import BookReview
 from account.models import CustomUser
 
 
+def handle_not_found(request, exception):
+    return render(request, 'not_found.html')
+
+
 def landing_page(request):
     user = CustomUser.objects.all().order_by('id')
     page_size = request.GET.get('page_size', 8)

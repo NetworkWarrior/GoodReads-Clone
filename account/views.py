@@ -41,12 +41,9 @@ class LoginView(View):
 
 class ProfileView(View):
     def get(self, request, id):
-        view_profile = CustomUser.objects.get(id=id)
-        if view_profile == request.user:
-            user = request.user
-        else:
-            user = view_profile
-        return render(request, 'account/profile.html', {'user':user})
+        user = CustomUser.objects.get(id=id)
+        user_reviews = user.bookreview_set.all()
+        return render(request, 'account/profile.html', {'user':user, 'reviews':user_reviews})
 
 
 class LogoutView(View):
@@ -76,15 +73,13 @@ class ProfileEditView(LoginRequiredMixin, View):
             return render(request, 'account/profile-edit.html', {'form':update_form})
 
 
-class ProfilesView(ListView):
-    model = CustomUser
-    template_name = 'account/main.html'
-    context_object_name = 'profiles'
-
-    def get_queryset(self):
-        return CustomUser.objects.all().exclude(id=self.request.user.id)
-
-
+class ProfilesView(View):
+    def get(self, request):
+        profiles = CustomUser.objects.all().order_by('id')
+        search_query = request.GET.get('q', '')
+        if search_query:
+            profiles = profiles.filter(username__icontains=search_query)
+        return render(request, 'account/main.html', {'profiles':profiles, 'search': search_query})
 
 
 
